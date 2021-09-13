@@ -3,7 +3,6 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const config = require('../config/config').get(process.env.NODE_ENV);
 const SALT_I=10;
-
 const userSchema = mongoose.Schema({
     email:{
         type:String,
@@ -83,4 +82,4 @@ userSchema.methods.deleteToken = function(token,cb){
 }
 const User = mongoose.model('User',userSchema)
 
-module.exports = {User}
+module.exports = User

@@ -4,12 +4,13 @@ const mongoose = require('mongoose')
 const app = express();
 const config = require('./config/config').get(process.env.NODE_ENV);
 mongoose.Promise = global.Promise;
-const {User} = require('./models/user')
+const User = require('./models/user')
 const {Blog} =require('./models/blog')
 const {auth} = require('./middleware/auth')
 mongoose.connect(config.DATABASE)
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.static('client/build'))
 // --- GET ---
 app.get('/api/getblog',(req,res)=>{
     let id = req.query.id;
@@ -133,6 +134,13 @@ app.delete('/api/delete/',(req,res)=>{
     })
 })
 
+if(process.env.NODE_ENV === 'production')
+{
+    const path = require('path');
+    app.get('/*',(req,res)=>{
+        res.sendFile(path.resolve(__dirname,'../client','build','index.html'))
+    })
+}
 
 
 const port= process.env.PORT || 3001;
