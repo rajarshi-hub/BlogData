@@ -14,13 +14,13 @@ class Login extends Component {
        const email=this.state.email
        const password=this.state.password
        axios.post(`/api/login`,{email,password})
-       .then(resp=>{
+       .then((resp)=>{
         this.setState({info:resp.data})
-       }
-       )
-       if(this.state.info.isAuth)
+            if(this.state.info.isAuth)
        this.props.history.push('/user')
 
+       }
+       )
     }
     render() {
         return (
